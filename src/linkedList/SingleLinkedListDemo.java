@@ -1,5 +1,7 @@
 package linkedList;
 
+import java.util.Stack;
+
 /**
  * 单链表的实现
  * 头结点不能动
@@ -21,11 +23,34 @@ public class SingleLinkedListDemo {
         singleLinkedList.add(hero3);
         singleLinkedList.add(hero4);
 
-        System.out.println("反转前的链表");
+        System.out.println("最初的链表");
         singleLinkedList.list();
         System.out.println("反转后的链表");
         reverseList(singleLinkedList.getHead());
         singleLinkedList.list();
+
+        //测试逆序打印
+        System.out.println("进行逆序打印");
+        reversePrint(singleLinkedList.getHead());
+
+        System.out.println("测试两个有序单链表的合并");
+        SingleLinkedList list1 = new SingleLinkedList();
+        SingleLinkedList list2 = new SingleLinkedList();
+        list1.add(hero1);
+        list1.add(hero3);
+        list1.add(hero4);
+        list2.add(hero2);
+        System.out.println("1ist1:");
+        list1.list();
+        System.out.println("list2:");
+        list2.list();
+        System.out.println("合并后：");
+        HeroNode node = mergeList(list1.getHead(), list2.getHead());
+        HeroNode temp = node.next;
+        while (temp != null){
+            System.out.println(temp.toString());
+            temp = temp.next;
+        }
 
         //乱序插入，看是否正序
         //将1重复添加，查看是否有提示信息
@@ -57,6 +82,97 @@ public class SingleLinkedListDemo {
         //获取倒数第k个节点
         //HeroNode res = findLastIndexNode(singleLinkedList.getHead(), 1);
         //System.out.println("res = " + res);
+    }
+
+    /**
+     * 合并两个有序的单链表，使之合并后依然有序
+     *
+     * @param head1
+     * @param head2
+     * @return
+     */
+    public static HeroNode mergeList(HeroNode head1,HeroNode head2){
+        HeroNode newHead = new HeroNode(0,"","");
+        if (head1.next == null && head2.next == null){
+            return newHead;
+        }
+        //定义辅助节点
+        HeroNode cur1 = head1.next;
+        HeroNode cur2 = head2.next;
+        HeroNode temp = newHead;
+        HeroNode next = null;
+        while (cur1 != null||cur2 != null){
+            if (cur1 == null){
+                if (cur2 == null){
+                    break;
+                }else {
+                    //暂时保存cur2的next
+                    next = cur2.next;
+                    //将cur2的后面摘下，将cur2挂载newHead上
+                    cur2.next = temp.next;
+                    temp.next = cur2;
+                    cur2 = next;
+                    temp = temp.next;
+                }
+            }else {
+                if (cur2 == null){
+                    next = cur1.next;
+                    cur1.next = temp.next;
+                    temp.next = cur1;
+                    cur1 = next;
+                    temp = temp.next;
+                }else {
+                    if (cur1.no < cur2.no){
+                        next = cur1.next;
+                        cur1.next = temp.next;
+                        temp.next = cur1;
+                        cur1 = next;
+                        temp = temp.next;
+                    }else if (cur1.no == cur2.no){
+                        next = cur1.next;
+                        cur1.next = temp.next;
+                        temp.next = cur1;
+                        cur1 = next;
+                        cur2 = cur2.next;
+                        temp = temp.next;
+                    }else{
+                        next = cur2.next;
+                        cur2.next = temp.next;
+                        temp.next = cur2;
+                        cur2 = next;
+                        temp = temp.next;
+                    }
+                }
+            }
+
+        }
+        return newHead;
+    }
+
+    /**
+     * 利用栈这个数据结构实现链表逆序打印
+     * 栈后进先出
+     * 这样不会改变原本链表的顺序
+     * @param head 传入要逆序打印的链表的头结点
+     */
+    public static void reversePrint(HeroNode head){
+        if (head.next == null){
+            //链表为空
+            return;
+        }
+        //创建一个栈，将链表的各个结点压入栈中
+        Stack<HeroNode> stack = new Stack<>();
+        HeroNode cur = head.next;
+        //将链表的所有结点压入栈中
+        while (cur != null){
+            stack.push(cur);
+            cur = cur.next;
+        }
+        //将栈中的节点进行打印，pop出栈
+        while (stack.size() > 0){
+            System.out.println(stack.pop());
+        }
+
     }
 
     /**
@@ -161,6 +277,8 @@ class SingleLinkedList{
      * @param heroNode
      */
     public void add(HeroNode heroNode){
+        //先将heroNode的后面置为空，避免出现使用过的链以前进行插入
+        heroNode.next = null;
         //因为head节点不能动，因此我们需要一个辅助变量temp来帮助遍历
         HeroNode temp = head;
         //遍历链表，找到最后
@@ -182,6 +300,8 @@ class SingleLinkedList{
      * @param heroNode
      */
     public void addByOrder(HeroNode heroNode){
+        //先将heroNode的后面置为空，避免出现使用过的链以前进行插入
+        heroNode.next = null;
         //使用辅助变量temp找到添加的位置
         HeroNode temp = head;
         //单链表要找添加位置的前一个结点，否则无法插入，因为单链表只有后继
