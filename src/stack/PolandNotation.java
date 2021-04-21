@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- *
+ *  将中缀表达式转为后缀表达式
  * 使用栈实现逆波兰表达式(后缀表达式)的计算
  */
 public class PolandNotation {
