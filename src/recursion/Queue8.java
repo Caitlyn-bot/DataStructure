@@ -10,10 +10,12 @@ public class Queue8 {
     int[] array = new int[max];
     //统计解法的次数
     static int count = 0;
+    static int judgeCount = 0;
     public static void main(String[] args) {
         Queue8 queue8 = new Queue8();
         queue8.check(0);
         System.out.printf("一共有%d种解法",count);
+        System.out.printf("判断冲突的次数为%d",judgeCount);
     }
 
     /**
@@ -45,6 +47,7 @@ public class Queue8 {
      * @return
      */
     private boolean judge(int n){
+        judgeCount++;
         for (int i = 0; i < n; i++) {
             if (array[i] == array[n]||Math.abs(n - i) == Math.abs(array[n] - array[i])){
                 //array[i] == array[n]表示在同一列
