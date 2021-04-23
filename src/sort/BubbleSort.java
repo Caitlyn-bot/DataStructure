@@ -8,6 +8,7 @@ import java.util.Date;
  * 冒泡排序，核心思想，每次循环将未确定的数中最大或最小的数放在队尾
  * 优化思路：
  * 当在某趟排序中，没有发生一次交换，可以提前结束冒泡排序
+ * 10秒完成
  */
 public class BubbleSort {
     public static void main(String[] args) {
