@@ -17,8 +17,8 @@ public class QuickSort {
 
         //测试插入排序的速度,给定8万个数据测试
         int[] arrTest = new int[8000000];
-        for (int i = 0; i < 80000; i++) {
-            arrTest[i] = (int)(Math.random() * 8000000);//生成[0,8000000)的数
+        for (int i = 0; i < 8000000; i++) {
+            arrTest[i] = (int)(Math.random() * 800000000);//生成[0,8000000)的数
         }
         Date date1 = new Date();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yy-MM-dd HH:mm:ss");
