@@ -8,6 +8,7 @@ import java.util.Date;
  * 基数排序
  * 用空间换时间
  * 将数按照各个位数进行排序
+ * 不支持负数
  */
 public class RadixSort {
     public static void main(String[] args) {
