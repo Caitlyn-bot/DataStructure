@@ -6,7 +6,7 @@ import java.util.Scanner;
  * 使用哈希表来管理多条无表头的链表
  */
 public class HashTabDemo {
-    public static void main(String[] args) {
+    public static void main(String[] args ) {
         HashTab hashTab = new HashTab(7);
         Scanner scanner = new Scanner(System.in);
         String key ="";
