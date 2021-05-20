@@ -1,4 +1,4 @@
-package algorithm;
+package algorithm.binarysearchnorescursion;
 
 /**
  * 二分查找(非递归)
